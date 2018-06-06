@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Dashboard <small> Welcome {{session.username}}</small></h1>
+  <a class="btn btn-success" href="/add_topic"> Add topic</a>
+  <hr>
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for topic in topics %}
+      <tr>
+        <td>{{topic.id}}</td>
+        <td>{{topic.title}}</td>
+        <td>{{topic.author}}</td>
+        <td>{{topic.create_date}}</td>
+        <td><a href="edit_topic/{{topic.id}}" class="btn btn-default pull-right">Edit</a></td>
+        <td>
+          <form action="{{url_for('delete_topic', id=topic.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
